@@ -12,11 +12,14 @@ const roomModel = require('./Model/room');
 const app = express();
 
 // Enable Cross-Origin Resource Sharing (CORS)
-app.use(cors());
+app.use(cors({
+  origin: 'https://code-live-plum.vercel.app/',
+  methods: ["GET", "POST"]
+}));
 
 // Middleware to set CORS headers
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'https://code-live-plum.vercel.app');
+  res.setHeader('Access-Control-Allow-Origin', 'https://code-live-plum.vercel.app/');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   res.setHeader('Access-Control-Allow-Credentials', 'true');
@@ -31,7 +34,7 @@ app.use(bodyParser.json()); // Parse JSON request bodies
 // Create Socket.IO server and configure CORS options
 const io = new Server(server, {
   cors: {
-    origin: 'https://code-live-plum.vercel.app',
+    origin: 'https://code-live-plum.vercel.app/',
     methods: ["GET", "POST"]
   },
 });
