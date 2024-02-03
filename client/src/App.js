@@ -11,7 +11,7 @@ import "ace-builds/src-noconflict/snippets/python";
 import code from './code.png';
 
 // Connect to the Socket.IO server
-const socket = io.connect("https://codeliveserver.vercel.app");
+const socket = io.connect("https://codeliveserver.vercel.app/");
 
 const App = () => {
   // State variables
