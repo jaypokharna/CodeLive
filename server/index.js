@@ -7,7 +7,6 @@ const bodyParser = require('body-parser'); // Import body-parser
 const { exec } = require('child_process'); // Import child_process module for executing Python code
 const fs = require('fs'); // Import the file system module
 const roomModel = require('./Model/room');
-require('dotenv').config();
 
 // Create express app
 const app = express();
@@ -15,14 +14,14 @@ const app = express();
 // Enable Cross-Origin Resource Sharing (CORS)
 app.use(cors(
   {
-    origin:[process.env.CLIENT_URL],
+    origin:["https://code-live-lime.vercel.app"],
     methods : ["GET","POST"],
   }
 ));
 
 // Middleware to set CORS headers
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', process.env.CLIENT_URL);
+  res.setHeader('Access-Control-Allow-Origin', 'https://code-live-lime.vercel.app');
   // You can set other CORS headers as needed
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
@@ -38,7 +37,7 @@ app.use(bodyParser.json()); // Parse JSON request bodies
 // Create Socket.IO server and configure CORS options
 const io = new Server(server, {
   cors: {
-    origin: process.env.CLIENT_URL,
+    origin: 'https://code-live-lime.vercel.app',
     methods: ["GET", "POST"]
   },
 });

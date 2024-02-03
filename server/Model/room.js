@@ -1,8 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
-require('dotenv').config();
 
-mongoose.connect(process.env.MONGO_URL+'/codelive')
+mongoose.connect("mongodb+srv://jayp:2012@cluster0.ozimw5y.mongodb.net/codelive")
 
 const roomSchema = new Schema({
 
