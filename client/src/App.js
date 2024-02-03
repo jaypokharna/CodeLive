@@ -11,7 +11,7 @@ import "ace-builds/src-noconflict/snippets/python";
 import code from './code.png';
 
 // Connect to the Socket.IO server
-const socket = io.connect("https://code-live-server-delta.vercel.app");
+const socket = io.connect("https://codeliveserver.vercel.app");
 
 const App = () => {
   // State variables
@@ -55,7 +55,7 @@ const App = () => {
     e.preventDefault();
     try {
       // Send Python code and input data to the backend
-      const response = await axios.post('https://code-live-server-delta.vercel.app/runcode', { message, inputData });
+      const response = await axios.post('https://codeliveserver.vercel.app/runcode', { message, inputData });
       setInputData('');
       setOutput(response.data.output);
     } catch (error) {
@@ -78,7 +78,7 @@ const App = () => {
   const handleSubmit = async () => {
     if (roomId && password) {
       try {
-        const response = await axios.post('https://code-live-server-delta.vercel.app/join-room', { roomId, password });
+        const response = await axios.post('https://codeliveserver.vercel.app/join-room', { roomId, password });
         if (response.data.message === 'Invalid password.') {
           alert("Invalid password.");
           setPassword('');
