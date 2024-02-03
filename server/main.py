@@ -1,0 +1,3 @@
+for i in "items":
+    print(i)
+    # TODO: write code...
