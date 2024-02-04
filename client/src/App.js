@@ -42,6 +42,7 @@ const App = () => {
     setMessage(newMessage);
 
     // Send message to the server
+    console.log("Sendig Message")
     socket.emit("send_message", { newMessage, roomId });
   }
 
@@ -54,8 +55,10 @@ const App = () => {
   const runCode = async (e) => {
     e.preventDefault();
     try {
+      console.log("Before runcode")
       // Send Python code and input data to the backend
       const response = await axios.post('https://codeliveserver.vercel.app/runcode', { message, inputData });
+      console.log("After runcode")
       setInputData('');
       setOutput(response.data.output);
     } catch (error) {
