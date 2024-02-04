@@ -10,8 +10,9 @@ import "ace-builds/src-noconflict/ext-elastic_tabstops_lite";
 import "ace-builds/src-noconflict/snippets/python";
 import code from './code.png';
 
+
 // Connect to the Socket.IO server
-const socket = io.connect("https://codeliveserver.vercel.app");
+const socket = io.connect("https://codeliveserver.vercel.app/");
 
 const App = () => {
   // State variables
@@ -291,8 +292,8 @@ const App = () => {
             <img src={code} alt="" width='30px' className='mr-2' />
             <h2 className='text-2xl font-mono'>CodeLive</h2>
           </div>
-          <div class='has-tooltip flex items-center justify-center font-mono'>
-            <span class='tooltip rounded shadow-lg p-1 bg-[rgb(20,20,20)] flex gap-3'><h2>ID - {roomId}</h2><h2>Pass - {password}</h2></span>
+          <div className='has-tooltip flex items-center justify-center font-mono'>
+            <span className='tooltip rounded shadow-lg p-1 bg-[rgb(20,20,20)] flex gap-3'><h2>ID - {roomId}</h2><h2>Pass - {password}</h2></span>
             Room Details
           </div>
           <div className="right">

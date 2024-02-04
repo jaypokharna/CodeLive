@@ -19,7 +19,7 @@ app.use(cors({
 
 // Middleware to set CORS headers
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Origin', 'https://code-live-plum.vercel.app');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
   res.setHeader('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, Accept");
   res.setHeader('Access-Control-Allow-Credentials', 'true');
@@ -34,7 +34,7 @@ app.use(bodyParser.json()); // Parse JSON request bodies
 // Create Socket.IO server and configure CORS options
 const io = new Server(server, {
   cors: {
-    origin: ["https://code-live-plum.vercel.app"],
+    origin: "https://code-live-plum.vercel.app",
     methods: ["GET", "POST"]
   },
 });
@@ -48,7 +48,7 @@ io.on('connection', (socket) => {
     console.log('User Connected'+{data})
     socket.join(data);
     const room = await roomModel.findOne({ roomId: data });
-    socket.emit("code_history ", room.code);
+    socket.emit("code_history", room.code);
   });
 
   // Leave a room
@@ -58,7 +58,7 @@ io.on('connection', (socket) => {
 
   // Send message to all clients except sender
   socket.on("send_message", async (data) => {
-    console.log("Message Received "+{data})
+    console.log("Message Received"+{data})
     const room = data.roomId;
     const code = await roomModel.findOneAndUpdate({ roomId: room }, { code: data.newMessage });
     socket.to(data.roomId).emit("receive_message", data);
@@ -108,7 +108,7 @@ app.post('/runcode', (req, res) => {
   exec(`python3 main.py ${inputData}`, (error, stdout, stderr) => {
     if (error) {
       if (error.message.includes("/bin/sh: line 1:")) {
-        res.json({ output: "Error - Unable to run! Check your code..." });
+        res.json({ output: "Error - Unable to run! Check your code..."});
       } else {
         res.json({ output: error.message });
       }
