@@ -37,7 +37,7 @@ app.use(bodyParser.json()); // Parse JSON request bodies
 // Create Socket.IO server and configure CORS options
 const io = new Server(server, {
   cors: {
-    origin: ["https://code-live-plum.vercel.app","https://code-live-plum.vercel.app/"],
+    origin: ["https://code-live-plum.vercel.app/"],
     methods: ["GET", "POST"]
   },
 });
