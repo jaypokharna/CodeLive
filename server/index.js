@@ -12,14 +12,17 @@ const roomModel = require('./Model/room');
 const app = express();
 
 // Enable Cross-Origin Resource Sharing (CORS)
-app.use(cors({
-  origin: 'https://code-live-plum.vercel.app/',
-  methods: ["GET", "POST"]
-}));
+app.use(cors(
+  {
+      origin: ["https://code-live-plum.vercel.app"],
+      methods: ["POST", "GET"],
+      credentials: true
+  }
+));
 
 // Middleware to set CORS headers
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'https://code-live-plum.vercel.app/');
+  res.setHeader('Access-Control-Allow-Origin', 'https://code-live-plum.vercel.app');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   res.setHeader('Access-Control-Allow-Credentials', 'true');
@@ -34,7 +37,7 @@ app.use(bodyParser.json()); // Parse JSON request bodies
 // Create Socket.IO server and configure CORS options
 const io = new Server(server, {
   cors: {
-    origin: 'https://code-live-plum.vercel.app',
+    origin: ["https://code-live-plum.vercel.app"],
     methods: ["GET", "POST"]
   },
 });
@@ -45,9 +48,10 @@ io.on('connection', (socket) => {
 
   // Join a room
   socket.on('join_room', async (data) => {
+    console.log('User Connected'+{data})
     socket.join(data);
     const room = await roomModel.findOne({ roomId: data });
-    socket.emit("code_history", room.code);
+    socket.emit("code_history ", room.code);
   });
 
   // Leave a room
@@ -57,6 +61,7 @@ io.on('connection', (socket) => {
 
   // Send message to all clients except sender
   socket.on("send_message", async (data) => {
+    console.log("Message Received "+{data})
     const room = data.roomId;
     const code = await roomModel.findOneAndUpdate({ roomId: room }, { code: data.newMessage });
     socket.to(data.roomId).emit("receive_message", data);
@@ -66,10 +71,12 @@ io.on('connection', (socket) => {
 // Handle joining a room
 app.post('/join-room', async (req, res) => {
   const { roomId, password } = req.body;
+  console.log("Inside join room route")
   try {
     // Check if the room exists in the database
     const existingRoom = await roomModel.findOne({ roomId: roomId });
     if (existingRoom) {
+      console.log("Existing User Found")
       // Room exists, check password
       if (existingRoom.password === password) {
         // Password is correct, user can join the room
@@ -80,12 +87,13 @@ app.post('/join-room', async (req, res) => {
       }
     } else {
       // Room does not exist, create a new room
+      console.log("No exiting user , new user")
       const newRoom = new roomModel({ roomId, password });
       await newRoom.save();
       res.json({ message: 'New room created.' });
     }
   } catch (error) {
-    console.error('Error joining room:', error);
+    console.log('Error joining room:', error);
     res.json({ message: 'Internal server error.' });
   }
 });
@@ -93,6 +101,7 @@ app.post('/join-room', async (req, res) => {
 // Handle running Python code
 app.post('/runcode', (req, res) => {
   // Extract Python code and input data from the request body
+  console.log("inside run code")
   const { message, inputData } = req.body;
 
   // Write the Python code into a temporary file named 'main.py'
