@@ -12,7 +12,7 @@ import code from './code.png';
 
 
 // Connect to the Socket.IO server
-const socket = io.connect("https://codeliveserver.vercel.app/");
+const socket = io.connect("https://code-live-server-iota.vercel.app");
 
 const App = () => {
   // State variables
@@ -58,7 +58,7 @@ const App = () => {
     try {
       console.log("Before runcode")
       // Send Python code and input data to the backend
-      const response = await axios.post('https://codeliveserver.vercel.app/runcode', { message, inputData });
+      const response = await axios.post('https://code-live-server-iota.vercel.app/runcode', { message, inputData });
       console.log("After runcode")
       setInputData('');
       setOutput(response.data.output);
@@ -82,7 +82,7 @@ const App = () => {
   const handleSubmit = async () => {
     if (roomId && password) {
       try {
-        const response = await axios.post('https://codeliveserver.vercel.app/join-room', { roomId, password });
+        const response = await axios.post('https://code-live-server-iota.vercel.app/join-room', { roomId, password });
         if (response.data.message === 'Invalid password.') {
           alert("Invalid password.");
           setPassword('');
