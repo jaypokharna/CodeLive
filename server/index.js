@@ -13,13 +13,13 @@ const app = express();
 
 // Enable Cross-Origin Resource Sharing (CORS)
 app.use(cors({
-  origin: "https://code-live-plum.vercel.app", // restrict calls to those this address
+  origin: "http://localhost:3000", // restrict calls to those this address
   methods: ["POST","GET"] // only allow GET requests
 }));
 
 // Middleware to set CORS headers
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
   res.setHeader('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, Accept");
   res.setHeader('Access-Control-Allow-Credentials', 'true');
@@ -34,7 +34,7 @@ app.use(bodyParser.json()); // Parse JSON request bodies
 // Create Socket.IO server and configure CORS options
 const io = new Server(server, {
   cors: {
-    origin: "https://code-live-plum.vercel.app",
+    origin: "http://localhost:3000",
     methods: ["GET", "POST"]
   },
 });

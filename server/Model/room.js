@@ -1,23 +1,30 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const { Schema } = mongoose; // Destructure Schema directly from mongoose
 
-mongoose.connect("mongodb+srv://jayp:2012@cluster0.ozimw5y.mongodb.net/codelive")
+require('dotenv').config(); // Load environment variables from .env file
 
+const mongoURI = process.env.MONGO_URL;
+
+// Connect to MongoDB
+mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log('Connected to MongoDB Server'))
+    .catch(error => console.error('MongoDB connection error:', error));
+
+// Define the schema for the Room model
 const roomSchema = new Schema({
-
-    roomId : {
-        type : String , 
-        required : true,
-        unique : true
+    roomId: {
+        type: String,
+        required: true,
+        unique: true
     },
-    password : {
-        type : String,
-        required : true
+    password: {
+        type: String,
+        required: true
     },
-    code : {
-        type : String
+    code: {
+        type: String
     }
+});
 
-})
-
-module.exports = mongoose.model('Room' , roomSchema)
+// Create and export the Room model
+module.exports = mongoose.model('Room', roomSchema);
