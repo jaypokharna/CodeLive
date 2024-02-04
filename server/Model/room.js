@@ -1,12 +1,8 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose; // Destructure Schema directly from mongoose
 
-require('dotenv').config(); // Load environment variables from .env file
-
-const mongoURI = process.env.MONGO_URL;
-
 // Connect to MongoDB
-mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect("mongodb://localhost:27017/codelive", { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('Connected to MongoDB Server'))
     .catch(error => console.error('MongoDB connection error:', error));
 

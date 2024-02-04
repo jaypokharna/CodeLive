@@ -25,13 +25,11 @@ cd server
 npm insatll
 ```
 
-3. Install dependencies for the server 
+3. Install dependencies for the client 
 ```bash
 cd server
 npm insatll
 ```
-
-4. Set up environment variables in ```.env``` file
 
 4. Start the server
 ```bash
